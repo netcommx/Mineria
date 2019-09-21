@@ -65,7 +65,7 @@ boxplot(attrition.df$YearsInCurrentRole)
 boxplot(attrition.df$YearsSinceLastPromotion)
 boxplot(attrition.df$YearsWithCurrManager)
 
-
+#particion de train y test
 index=createDataPartition(attrition.df$Attrition,p=0.7, list = FALSE)
 train=attrition.df[index, ];
 test=attrition.df[-index, ]
@@ -83,6 +83,5 @@ knn_attrition = function(train, test, k){
   df_train=data.frame(train=c(train), d=c(d))
   df_order=df_train[order(df_train$d),]
   resultados=df_order$train.Attrition[1:3];
-  
    return (resultados)
 }
