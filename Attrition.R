@@ -2,20 +2,19 @@ attrition = Employee.Attrition
 
 names(attrition)[1]<-"Age"
 
-MaxAge=max(attrition$Age)
-MinAge=min(attrition$Age)
-MaxDR=max(attrition$DailyRate)
-MinDR=min(attrition$DailyRate)
-MaxDFH=max(attrition$DistanceFromHome)
-MinDFH=min(attrition$DistanceFromHome)
-MaxEducation=max(attrition$Education)
-MinEducation=min(attrition$Education)
+
+
+#Cambia atributos categoricos a numericos
+attrition2=data.matrix(attrition)
+
+#cambiar matriz a dataframe
+attrition.df <- as.data.frame(attrition2)
 
 #Eliminar atributos que no se necesiten
-attrition$EmployeeCount<-NULL
-attrition$Over18<-NULL
-attrition$StandardHours<-NULL
-attrition$EmployeeNumber<-NULL
+attrition.df$EmployeeCount<-NULL
+attrition.df$Over18<-NULL
+attrition.df$StandardHours<-NULL
+attrition.df$EmployeeNumber<-NULL
 attrition.df$JobRole<-NULL
 attrition.df$JobInvolvement<-NULL
 attrition.df$MaritalStatus<-NULL
@@ -29,11 +28,59 @@ attrition.df$StockOptionLevel<-NULL
 attrition.df$TrainingTimesLastYear<-NULL
 attrition.df$WorkLifeBalance<-NULL
 attrition.df$BusinessTravel<-NULL
-#Cambia atributos categoricos a numericos
-attrition2=data.matrix(attrition)
 
-#cambiar matriz a dataframe
-attrition.df <- as.data.frame(attrition2)
+#Normalizacion
+MaxAge=max(attrition.df$Age)
+MinAge=min(attrition.df$Age)
+mediaAge=(attrition.df$Age[1]-MaxAge)/(MaxAge-MinAge)
+MaxDR=max(attrition.df$DailyRate)
+MinDR=min(attrition.df$DailyRate)
+mediaDR=(attrition.df$DailyRate[1]-MaxDR)/(MaxDR-MinDR)
+MaxDFH=max(attrition.df$DistanceFromHome)
+MinDFH=min(attrition.df$DistanceFromHome)
+mediaDFH=(attrition.df$DistanceFromHome[1]-MaxDFH)/(MaxDFH-MinDFH)
+MaxES=max(attrition.df$EnvironmentSatisfaction)
+MinES=min(attrition.df$EnvironmentSatisfaction)
+mediaES=(attrition.df$EnvironmentSatisfaction[1]-MaxES)/(MaxES-MinES)
+MaxHR=max(attrition.df$HourlyRate)
+MinHR=min(attrition.df$HourlyRate)
+mediaHR=(attrition.df$HourlyRate[1]-MaxHR)/(MaxHR-MinHR)
+MaxJL=max(attrition.df$JobLevel)
+MinJL=min(attrition.df$JobLevel)
+mediaJL=(attrition.df$JobLevel[1]-MaxJL)/(MaxJL-MinJL)
+MaxJS=max(attrition.df$JobSatisfaction)
+MinJS=min(attrition.df$JobSatisfaction)
+mediaJS=(attrition.df$JobSatisfaction[1]-MaxJS)/(MaxJS-MinJS)
+MaxMI=max(attrition.df$MonthlyIncome)
+MinMI=min(attrition.df$MonthlyIncome)
+mediaMI=(attrition.df$MonthlyIncome[1]-MaxMI)/(MaxMI-MinMI)
+MaxMR=max(attrition.df$MonthlyRate)
+MinMR=min(attrition.df$MonthlyRate)
+mediaMR=(attrition.df$MonthlyRate[1]-MaxMR)/(MaxMR-MinMR)
+MaxNCW=max(attrition.df$NumCompaniesWorked)
+MinNCW=min(attrition.df$NumCompaniesWorked)
+mediaNCW=(attrition.df$NumCompaniesWorked[1]-MaxNCW)/(MaxNCW-MinNCW)
+MaxO=max(attrition.df$OverTime)
+MinO=min(attrition.df$OverTime)
+mediaO=(attrition.df$OverTime[1]-MaxO)/(MaxO-MinO)
+MaxPSH=max(attrition.df$PercentSalaryHike)
+MinPSH=min(attrition.df$PercentSalaryHike)
+mediaPSH=(attrition.df$PercentSalaryHike[1]-MaxPSH)/(MaxPSH-MinPSH)
+MaxTWY=max(attrition.df$TotalWorkingYears)
+MinTWY=min(attrition.df$TotalWorkingYears)
+mediaTWY=(attrition.df$TotalWorkingYears[1]-MaxTWY)/(MaxTWY-MinTWY)
+MaxYAC=max(attrition.df$YearsAtCompany)
+MinYAC=min(attrition.df$YearsAtCompany)
+mediaYAC=(attrition.df$YearsAtCompany[1]-MaxYAC)/(MaxYAC-MinYAC)
+MaxYCR =max(attrition.df$YearsInCurrentRole)
+MinYCR=min(attrition.df$YearsInCurrentRole)
+mediaYCR=(attrition.df$YearsInCurrentRole[1]-MaxYCR)/(MaxYCR-MinYCR)
+MaxYLP=max(attrition.df$YearsSinceLastPromotion)
+MinYLP=min(attrition.df$YearsSinceLastPromotion)
+mediaYLP=(attrition.df$YearsSinceLastPromotion[1]-MaxYLP)/(MaxYLP-MinYLP)
+MaxYCM=max(attrition.df$YearsWithCurrManager)
+MinYCM=min(attrition.df$YearsWithCurrManager)
+mediaYCM=(attrition.df$YearsWithCurrManager[1]-MaxYCM)/(MaxYCM-MinYCM)
 
 #graficas de atributos
 boxplot(attrition.df$Age~attrition.df$Attrition)
@@ -66,7 +113,7 @@ boxplot(attrition.df$YearsSinceLastPromotion)
 boxplot(attrition.df$YearsWithCurrManager)
 
 #particion de train y test
-index=createDataPartition(attrition.df$Attrition,p=0.7, list = FALSE)
+index=createDataPartition(attrition.df$Attrition,p=0.8, list = FALSE)
 train=attrition.df[index, ];
 test=attrition.df[-index, ]
 
@@ -78,10 +125,9 @@ knn_attrition = function(train, test, k){
     abs(train$NumCompaniesWorked-test$NumCompaniesWorked[1]) + abs(train$OverTime-test$OverTime[1]) + abs(train$PercentSalaryHike-test$PercentSalaryHike[1]) + 
     abs(train$TotalWorkingYears-test$TotalWorkingYears[1]) + abs(train$YearsAtCompany-test$YearsAtCompany[1]) + abs(train$YearsInCurrentRole-test$YearsInCurrentRole[1]) + 
     abs(train$YearsSinceLastPromotion-test$YearsSinceLastPromotion[1]) + abs(train$YearsWithCurrManager-test$YearsWithCurrManager[1])
- 
    #ordenar
-  df_train=data.frame(train=c(train), d=c(d))
-  df_order=df_train[order(df_train$d),]
-  resultados=df_order$train.Attrition[1:3];
-   return (resultados)
+  df_train=data.frame(train=c(train), d=c(d));
+  df_order=df_train[order(df_train$d),];
+  resultados=df_order$train.Attrition[1]
+  return (resultados)
 }
