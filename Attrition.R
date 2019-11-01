@@ -3,7 +3,6 @@ attrition = Employee.Attrition
 names(attrition)[1]<-"Age"
 
 
-
 #Cambia atributos categoricos a numericos
 attrition2=data.matrix(attrition)
 
@@ -131,3 +130,15 @@ knn_attrition = function(train, test, k){
   resultados=df_order$train.Attrition[1]
   return (resultados)
 }
+
+#distancia euclidean
+knn_attr = function(train, test, k){
+de=(sqrt(train$Age-test$Age[1])^2 + (train$DailyRate-test$DailyRate[1])^2 + (train$DistanceFromHome-test$DistanceFromHome[1])^2 + 
+  (train$EnvironmentSatisfaction-test$EnvironmentSatisfaction[1])^2 + (train$HourlyRate-test$HourlyRate[1])^2 + abs(train$JobLevel-test$JobLevel[1])^2 + 
+  (train$JobSatisfaction-test$JobSatisfaction[1])^2 + (train$MonthlyIncome-test$MonthlyIncome[1])^2 + (train$MonthlyRate-test$MonthlyRate[1])^2 + 
+  (train$NumCompaniesWorked-test$NumCompaniesWorked[1])^2 + (train$OverTime-test$OverTime[1])^2 + (train$PercentSalaryHike-test$PercentSalaryHike[1])^2 + 
+  (train$TotalWorkingYears-test$TotalWorkingYears[1])^2 + (train$YearsAtCompany-test$YearsAtCompany[1])^2 + (train$YearsInCurrentRole-test$YearsInCurrentRole[1])^2 + 
+  (train$YearsSinceLastPromotion-test$YearsSinceLastPromotion[1])^2 + (train$YearsWithCurrManager-test$YearsWithCurrManager[1])^2)
+return(de)
+}
+
