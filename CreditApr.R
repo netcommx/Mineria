@@ -109,4 +109,3 @@ precision<-sum(diag(MC))/sum(MC)*100
 #arbol
 plot(modelo)
 
-

@@ -66,4 +66,3 @@ matriz=table(modelof,test$Diagnosis)
 
 #Calcular precision
 precision<-sum(diag(matriz))/sum(matriz)*100
-
