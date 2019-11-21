@@ -18,3 +18,4 @@ m=c(o,1,2,3,4);
 r=3*z;
 g=m+z
 
+# REVISADO POR JUAN PABLO GARCIA VAZQUEZ
