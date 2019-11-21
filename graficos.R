@@ -41,3 +41,6 @@ barplot(tab_breast, col = c("royalblue", "grey"),xlab="resultado", ylab = "Numer
 #gráfica 3D
 open3d()
 plot3d(train$`Tumo size`, train$`deg malig`,train$`inv nodes`,col=rainbow(3), type = "s")
+
+
+# REVISADO POR JUAN PABLO GARCIA VAZQUEZ
